@@ -13,9 +13,9 @@ const POSTS_EXTRA = [
   { slug:'sgmedia-closure', title:'The Last Year of SGMedia: What Survived and What Didn\'t', date:'2018-03-15', excerpt:'Closing the studio, distributing IP, and the technical artifacts that outlived the company.', topic:'SGMedia', tags:['sgmedia','closure','legacy','lessons'], readTime:9 },
 
   // ===== 2019 updates: Santa Monica, Atlanta, tutorials =====
-  { slug:'move-to-santa-monica', title:'Relocating to Santa Monica: A Dev\'s First Taste of Silicon Beach', date:'2019-03-01', excerpt:'Moving from Vietnam to Santa Monica, CA — the culture shock, the tech scene, and coding by the pier.', topic:'Personal', tags:['santa-monica','relocation','personal'], readTime:6 },
+  { slug:'move-to-santa-monica', title:'Relocating to Santa Monica: A Dev\'s First Taste of Silicon Beach', date:'2019-11-21', excerpt:'Moving from Vietnam to Santa Monica, CA — the culture shock, the tech scene, and coding by the pier.', topic:'Personal', tags:['santa-monica','relocation','personal'], readTime:6 },
   { slug:'jme-tutorials-atomixgame', title:'Writing JME Tutorials and Building atomixgame on GitHub', date:'2019-04-20', excerpt:'The story behind the JME3 tutorial series, the atomixgame GitHub org, and teaching 3D game dev to thousands.', topic:'Game Dev', tags:['jme3','tutorials','opensource','atomixgame'], readTime:7 },
-  { slug:'atlanta-tech-scene', title:'From Santa Monica to Atlanta: Southern Tech and New Roots', date:'2019-08-15', excerpt:'Why I moved from California to Georgia, the Atlanta tech ecosystem, and how it compares to Silicon Beach.', topic:'Personal', tags:['atlanta','relocation','tech','personal'], readTime:5 },
+  { slug:'atlanta-tech-scene', title:'From Santa Monica to Atlanta: Southern Tech and New Roots', date:'2020-10-02', excerpt:'Why I moved from California to Georgia, the Atlanta tech ecosystem, and how it compares to Silicon Beach.', topic:'Personal', tags:['atlanta','relocation','tech','personal'], readTime:5 },
 
   // ===== 2024+ AI Provider deep dives =====
   { slug:'ai-video-generation-2024', title:'AI Video Generation in 2024: Providers Compared', date:'2024-03-05', excerpt:'Hands-on with Runway, Pika, and Stable Video Diffusion — which models deliver cinematic results and which waste your budget.', topic:'AI', tags:['ai','video','generation','comparison'], readTime:11 },
