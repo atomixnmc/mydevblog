@@ -40,7 +40,7 @@ const BLOG = {
 
   postImg(p) {
     const m = POST_IMAGES || {};
-    return m[p.slug] || null;
+    return m[p.slug] || 'blog-mydevblog.png';
   },
 
   postCardHTML(p) {
