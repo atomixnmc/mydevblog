@@ -1,0 +1,17 @@
+# HyperGraph Execution Engine: Query Processing Internals
+
+The execution engine is the heart of a HyperGraph database—the component that translates query plans into efficient data access patterns over hyperedge structures. Its design differs from both relational and property graph engines due to the unique characteristics of hypergraph data.
+
+**Physical operators** extend standard database operator patterns. The `HyperEdgeScan` operator iterates over hyperedges of a given type, optionally filtering by arity. `VertexLookup` retrieves vertices by ID from the sorted row store. `HyperEdgeExpand` is the core operator: given a set of source vertices, it finds all incident hyperedges and returns (hyperedge, neighbor_vertices) tuples. This operator encapsulates the bidirectional adjacency index traversal—forward (vertex→hyperedge) then reverse (hyperedge→vertex).
+
+**The pipeline breaker problem**: In relational databases, hash joins and sorts materialize intermediate results. In HyperGraph, hyperedge expansion is the critical pipeline breaker. Expanding a high-degree vertex (e.g., a popular user in a collaboration network) can produce millions of intermediate tuples. The engine's memory manager monitors intermediate result sizes and switches from in-memory hash-based expansion to disk-backed sort-merge expansion when estimates exceed available memory.
+
+**Vectorized execution** processes batches of vertices through the operator pipeline. Instead of expanding one vertex at a time, the engine collects batches of 1024 vertices and expands them in a single operator call. This amortizes the overhead of index navigation and leverages SIMD-friendly instruction patterns for batch processing. Vectorized expansion is 3-5x faster than row-at-a-time processing for hyperedge traversal.
+
+**Compilation vs interpretation**: The execution engine can use either interpretation (walking a tree of operator nodes) or compilation (generating native code for the query). The compiled approach uses LLVM to generate specialized machine code for each query plan. The generated code inlines operator logic, eliminates virtual dispatch, and prefetches hyperedge adjacency data based on access patterns observed during the first execution. For repeated queries (parameterized), the compiled plan caches and reuses generated code.
+
+**Parallelism model**: Intra-query parallelism partitions vertex sets across worker threads. Each worker processes a subset of vertices through the operator pipeline, producing intermediate results that are merged at exchange operators. The exchange operator implements hash-based partitioning (for expand-then-join patterns) or range-based partitioning (for scan patterns). NUMA-aware thread affinity pins workers to memory regions containing their assigned vertex partitions.
+
+**Adaptive reoptimization**: The engine collects runtime statistics during query execution—actual cardinalities, selectivity factors, and data distribution. If the optimizer's estimates deviate significantly from runtime observations (e.g., estimated 1000 vertices, found 100,000), the engine can re-plan the unfinished portion of the query. This handles the common case of skewed hyperedge degree distributions that foil static optimization.
+
+The execution engine's design reflects a fundamental tension: hypergraphs enable richer data modeling but demand more sophisticated runtime support to achieve performance competitive with simpler graph models on common workloads.

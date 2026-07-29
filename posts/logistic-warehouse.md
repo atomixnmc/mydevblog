@@ -1,0 +1,13 @@
+# Warehouse Optimization: Algorithms for the Modern DC
+
+Modern distribution centers (DCs) are complex systems where every decision—where to store inventory, how to route pickers, when to replenish—affects throughput, labor cost, and order accuracy. Warehouse optimization applies operations research and machine learning to these decisions.
+
+**Slotting optimization** answers: where should each SKU live? The objective is minimizing travel time for picking while respecting storage constraints (weight limits, temperature zones, hazardous material segregation). ABC analysis classifies SKUs by pick frequency: high-velocity items go to "golden zones" closest to shipping. Correlated placement groups items frequently ordered together—if customers who buy pasta also buy sauce, position them nearby. The slotting algorithm solves a quadratic assignment problem, typically with local search heuristics adapting as demand patterns shift.
+
+**Wave planning** batches orders into waves for efficient fulfillment. The algorithm balances several objectives: grouping orders with similar SKUs (reducing travel), respecting order cutoff times, and leveling workload across shifts. Batching is a bin-packing problem variant where the "bin" is a wave's capacity and items are order contents. Good wave plans reduce picker travel by 20-30% compared to ad-hoc order release.
+
+**Picking route optimization** computes efficient paths through the warehouse. For pickers walking aisles, the optimal route is a Steiner traveling salesman problem constrained to aisle layouts. The standard heuristic is the "S-shape" (traverse entire aisles in sequence) or "largest gap" (enter/exit aisles at optimal points). Dynamic routing adjusts for congestion—if multiple pickers are in the same aisle, reroute to avoid bottlenecks.
+
+**Replenishment algorithms** decide when to move inventory from reserve storage to forward pick locations. The trigger is typically a threshold model: when a pick location's inventory drops below reorder point, pull a full case from reserve. More sophisticated models forecast demand and replenish proactively, considering the labor cost of replenishment versus the risk of stockouts and emergency replenishments.
+
+**Putaway optimization** assigns incoming inventory to storage locations considering pending orders, space utilization, and future pick paths. Real-time putaway directs workers to locations that minimize combined putaway + future picking travel distance. This is a dynamic optimization problem where decisions affect future states—solved by myopic heuristics or more expensive rollout algorithms with cached state estimates.

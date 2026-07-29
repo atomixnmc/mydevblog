@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mydevblog — AtomixM</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/themes/dark.css">
+  <link rel="stylesheet" href="css/blog.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace-autoloader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="js/posts-index.js"></script>
+  <script type="module" src="js/md-blog.js"></script>
+</head>
+<body>
+  <sl-drawer label="Posts by Year" placement="start" id="nav-drawer">
+    <nav id="year-nav"></nav>
+  </sl-drawer>
+
+  <sl-drawer label="Search" placement="end" id="search-drawer">
+    <sl-input id="search-input" placeholder="Search posts..." clearable pill>
+      <sl-icon name="search" slot="prefix"></sl-icon>
+    </sl-input>
+    <div id="search-results"></div>
+  </sl-drawer>
+
+  <header class="blog-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="https://avatars.githubusercontent.com/u/7083807?s=400" alt="AtomixM" class="avatar">
+        <div>
+          <h1>mydevblog</h1>
+          <p class="tagline">code · graphs · fractals · AI · games &mdash; since 2019</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <sl-button variant="neutral" size="small" id="btn-nav">
+          <sl-icon name="list" slot="prefix"></sl-icon> Years
+        </sl-button>
+        <sl-button variant="neutral" size="small" id="btn-search">
+          <sl-icon name="search" slot="prefix"></sl-icon> Search
+        </sl-button>
+        <sl-button variant="neutral" size="small" id="btn-theme">
+          <sl-icon name="moon" slot="prefix"></sl-icon>
+        </sl-button>
+      </div>
+    </div>
+  </header>
+
+  <main class="blog-main">
+    <aside class="blog-sidebar" id="sidebar">
+      <sl-card class="profile-card">
+        <div slot="header" class="profile-header">
+          <img src="https://avatars.githubusercontent.com/u/7083807?s=400" alt="AtomixM" class="profile-avatar">
+          <div>
+            <strong>atomixnmc</strong>
+            <sl-copy-button value="atomixnmc" size="small"></sl-copy-button>
+          </div>
+        </div>
+        <div class="profile-body">
+          <p>Building <strong>HyperGraph</strong> ecosystems — graph-native runtimes, AI animation, and visual programming.</p>
+          <sl-button variant="default" size="small" href="https://github.com/atomixnmc" target="_blank">
+            <sl-icon name="github" slot="prefix"></sl-icon> GitHub
+          </sl-button>
+          <sl-button variant="default" size="small" href="https://github.com/atomixnmc/mydevblog" target="_blank">
+            <sl-icon name="journal-code" slot="prefix"></sl-icon> Source
+          </sl-button>
+        </div>
+      </sl-card>
+
+      <sl-card class="topics-card">
+        <h3 slot="header">Topics</h3>
+        <div id="topic-cloud" class="topic-cloud"></div>
+      </sl-card>
+
+      <sl-card class="gh-card">
+        <h3 slot="header">GitHub Activity</h3>
+        <div id="gh-activity">
+          <sl-spinner></sl-spinner>
+          <p>Loading repos...</p>
+        </div>
+      </sl-card>
+    </aside>
+
+    <section class="blog-content" id="blog-content">
+      <div id="post-list" class="post-list"></div>
+      <div id="post-view" class="post-view" style="display:none;"></div>
+      <sl-spinner id="loading-spinner" style="display:none;"></sl-spinner>
+    </section>
+  </main>
+
+  <footer class="blog-footer">
+    <p>Built with <sl-icon name="heart" style="color:var(--sl-color-pink-500);vertical-align:middle"></sl-icon> using <a href="https://shoelace.style/" target="_blank">Shoelace</a>, <a href="https://marked.js.org/" target="_blank">marked</a> &amp; <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+    <p class="footer-gh"><sl-icon name="github"></sl-icon> <a href="https://github.com/atomixnmc/mydevblog">atomixnmc/mydevblog</a></p>
+  </footer>
+</body>
+</html>

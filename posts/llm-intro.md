@@ -1,0 +1,11 @@
+# Large Language Models: A Technical Introduction
+
+Large Language Models (LLMs) represent a paradigm shift in natural language processing—neural networks trained on internet-scale text that can generate coherent prose, answer questions, write code, and reason about complex topics. Understanding how they work requires unpacking three key concepts: scale, architecture, and training.
+
+**The Transformer architecture** is the foundation. At its core is the attention mechanism, which computes weighted relationships between every pair of tokens in a sequence. Self-attention allows the model to capture long-range dependencies—a pronoun referring to a noun three paragraphs back—without the vanishing gradient problems of recurrent networks. The "large" in LLMs comes from scaling this architecture: more layers, wider hidden dimensions, and more attention heads.
+
+**Training happens in two stages**. Pre-training uses self-supervised learning on massive text corpora (Common Crawl, books, Wikipedia, GitHub) with a simple objective: predict the next token. This task forces the model to learn grammar, factual knowledge, reasoning patterns, and stylistic conventions. The compute requirements are staggering: training GPT-3 cost an estimated $4-12 million in cloud compute alone. Fine-tuning adapts the pre-trained model to specific tasks using smaller, curated datasets.
+
+**Emergent abilities** appear at scale that smaller models lack entirely. In-context learning—performing a task from just a few examples in the prompt—emerges around the 1-10 billion parameter range. Chain-of-thought reasoning, multi-step arithmetic, and instruction following all appear at specific scale thresholds. These abilities weren't explicitly programmed; they emerged from the statistical patterns in training data.
+
+**Practical deployment** wrestles with inference cost, latency, and safety. Models run on specialized hardware (GPUs/TPUs) with quantization and distillation reducing memory footprints. Safety alignment through RLHF (Reinforcement Learning from Human Feedback) steers outputs away from harmful content while maintaining capability. The field continues to evolve rapidly, with Mixture-of-Experts, sparse attention, and retrieval augmentation pushing the frontier.
