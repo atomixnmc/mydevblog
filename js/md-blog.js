@@ -64,7 +64,7 @@ const BLOG = {
     const date=new Date(post.date).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
     const tags=(post.tags||[]).map(t=>`<sl-tag size="small" variant="neutral">${t}</sl-tag>`).join('');
     const img=this.postImg(post);
-    const imgHtml=img?`<img src="images/${img}" alt="${post.title}" class="blog-thumb" loading="lazy">`:'',
+    const imgHtml=img?`<img src="images/${img}" alt="${post.title}" class="blog-thumb" loading="lazy">`:'';
     view.innerHTML=`<sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button><article><h1>${post.title}</h1><div class="post-meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span><span><sl-icon name="clock"></sl-icon> ${post.readTime||'5'} min read</span>${post.topic?`<span><sl-icon name="bookmark"></sl-icon> ${post.topic}</span>`:''}${tags?`<span>${tags}</span>`:''}</div><hr>${imgHtml}${html}</article><sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button>`;
     history.pushState({},'',`#${slug}`);
     window.scrollTo({top:0,behavior:'smooth'});
