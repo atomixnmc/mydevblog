@@ -38,10 +38,17 @@ const BLOG = {
     el.innerHTML = years.map(y => `<div class="year-group"><h3><sl-icon name="calendar-event"></sl-icon> ${y} (${groups[y].length})</h3>${groups[y].map(p=>this.postCardHTML(p)).join('')}</div>`).join('');
   },
 
+  postImg(p) {
+    const m = POST_IMAGES || {};
+    return m[p.slug] || null;
+  },
+
   postCardHTML(p) {
     const date = new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     const tags = (p.tags||[]).map(t=>`<sl-tag size="small" variant="neutral">${t}</sl-tag>`).join('');
-    return `<div class="post-card" data-slug="${p.slug}"><div class="meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span>${p.topic?`<span><sl-icon name="bookmark"></sl-icon> ${p.topic}</span>`:''}<span><sl-icon name="clock"></sl-icon> ${p.readTime||'5'} min</span></div><h3>${p.title}</h3><div class="excerpt">${p.excerpt||''}</div>${tags?`<div class="tags">${tags}</div>`:''}</div>`;
+    const img = this.postImg(p);
+    const thumb = img ? `<img src="images/${img}" alt="" class="post-thumb" loading="lazy">` : '';
+    return `<div class="post-card" data-slug="${p.slug}">${thumb}<div class="post-card-body"><div class="meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span>${p.topic?`<span><sl-icon name="bookmark"></sl-icon> ${p.topic}</span>`:''}<span><sl-icon name="clock"></sl-icon> ${p.readTime||'5'} min</span></div><h3>${p.title}</h3><div class="excerpt">${p.excerpt||''}</div>${tags?`<div class="tags">${tags}</div>`:''}</div></div>`;
   },
 
   async openPost(slug) {
@@ -56,7 +63,9 @@ const BLOG = {
     const html=marked.parse(md);
     const date=new Date(post.date).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
     const tags=(post.tags||[]).map(t=>`<sl-tag size="small" variant="neutral">${t}</sl-tag>`).join('');
-    view.innerHTML=`<sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button><article><h1>${post.title}</h1><div class="post-meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span><span><sl-icon name="clock"></sl-icon> ${post.readTime||'5'} min read</span>${post.topic?`<span><sl-icon name="bookmark"></sl-icon> ${post.topic}</span>`:''}${tags?`<span>${tags}</span>`:''}</div><hr>${html}</article><sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button>`;
+    const img=this.postImg(post);
+    const imgHtml=img?`<img src="images/${img}" alt="${post.title}" class="blog-thumb" loading="lazy">`:'',
+    view.innerHTML=`<sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button><article><h1>${post.title}</h1><div class="post-meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span><span><sl-icon name="clock"></sl-icon> ${post.readTime||'5'} min read</span>${post.topic?`<span><sl-icon name="bookmark"></sl-icon> ${post.topic}</span>`:''}${tags?`<span>${tags}</span>`:''}</div><hr>${imgHtml}${html}</article><sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button>`;
     history.pushState({},'',`#${slug}`);
     window.scrollTo({top:0,behavior:'smooth'});
   },
