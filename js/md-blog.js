@@ -22,6 +22,8 @@ const BLOG = {
     'Lac': (p) => `> 🧩 *The glue layer:* Lac exists so you can swap runtimes without touching business logic. Think of it as the HAL from _2001: A Space Odyssey_ — but for computation, not spaceships. Hopefully fewer homicidal outbursts.`,
     'Uploop': (p) => `> 🌐 *Framework from the future:* Uploop flips the script: instead of components calling APIs, entities declare what they _are_ and the framework generates the rest. It's reactive, graph-native, and AI-readable. ${p.title} is the deep dive.`,
     'Meta': (p) => `> 📝 *Meta moment:* This blog itself is a project. Shoelace WebComponents, client-side Markdown, AI-generated images. ${p.title} is self-referential — a blog post about building the blog. How very 2026 of me.`,
+    'SGMedia': (p) => `> 🏢 *Founder flashback:* SGMedia was my first real company — founded in a Saigon coffee shop in 2013, killed by YouTube's adpocalypse in 2018. We built real-time game ecosystems with Node.js and Unity, learned what happens when your runway hits zero, and open-sourced everything that survived. ${p.title} is a piece of that story.`,
+    'Personal': (p) => `> 🌍 *Life update:* Not every post needs to be technical. Sometimes the most important migrations are the ones you make in real life — countries, cities, communities. This one is about the journey, not the framework.`,
   },
 
   // Fallback voice for topics not listed
@@ -52,7 +54,7 @@ const BLOG = {
   },
 
   async loadPosts() {
-    this.posts = POSTS_INDEX || [];
+    this.posts = [...(POSTS_INDEX||[]), ...(POSTS_EXTRA||[])];
     this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
   },
 

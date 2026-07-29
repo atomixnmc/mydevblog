@@ -204,4 +204,35 @@ const POST_IMAGES = {
   'uploop-bridges-current': '2026/bridges-2026.png',
   'hypergraph-polygon-runtime': '2026/polygon-2026.png',
   'long-polyglot-frontends': '2026/long-frontends.png',
+
+  // ===== Pre-2019: SGMedia =====
+  'sgmedia-founding-story': 'icons/sgmedia-startup.png',
+  'sgmedia-financial-struggle': 'icons/sgmedia-finance.png',
+  'nodejs-unity-realtime': 'icons/nodejs-unity.png',
+  'unity-mmorpg-nodejs': 'icons/unity-mmo.png',
+  'youtube-game-saturation': 'icons/youtube-market.png',
+  'sgmedia-pivot-lessons': 'icons/sgmedia-pivot.png',
+  'unity-webgl-deployment': 'icons/unity-webgl.png',
+  'opensource-game-frameworks': 'icons/atomixgame-org.png',
+  'tonegodgui-jme': 'icons/tonegodgui.png',
+  'sgmedia-closure': 'icons/sgmedia-closure.png',
+
+  // ===== 2019 Personal =====
+  'move-to-santa-monica': 'icons/santa-monica.png',
+  'jme-tutorials-atomixgame': 'icons/jme-tutorials.png',
+  'atlanta-tech-scene': 'icons/atlanta-tech.png',
+
+  // ===== 2024-2026 AI =====
+  'ai-video-generation-2024': 'icons/ai-video-gen.png',
+  'google-flow-ux': 'icons/google-flow.png',
+  'fal-ai-replicate-comparison': 'icons/fal-vs-replicate.png',
+  'wavespeed-models': 'icons/wavespeed.png',
+  'gpu-renting-nightmare': 'icons/gpu-renting.png',
+  'self-deploy-ai-models': 'icons/self-deploy-ai.png',
+  'replicate-model-taste': 'icons/ai-model-taste.png',
+  '3d-model-ai-generation': 'icons/ai-3d-models.png',
+  'audio-generation-2025': 'icons/ai-audio.png',
+  'google-flow-image-2026': 'icons/google-flow-2026.png',
+  'fal-ai-2026-progress': 'icons/fal-vs-replicate.png',
+  'ai-animation-workflow-2026': 'icons/ai-video-gen.png',
 };
