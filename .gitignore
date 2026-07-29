@@ -1,3 +1,12 @@
 # Windows reserved names
 nul
 NUL
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
