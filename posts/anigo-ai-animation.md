@@ -13,7 +13,7 @@ Character State ──► Motion Matching ──► Animation Pose
 
 The motion space is built by preprocessing a motion capture dataset. Each frame of every clip is analyzed for: joint positions and velocities, foot contact states, trajectory (future path of root joint), and style tags (walk, run, jump, idle). These features are projected into a compact latent space using a simple autoencoder (3-layer MLP, 128-dim latent). The runtime then finds the nearest neighbor in this space for any query state.
 
-![](2023/anigo-ai-animation_img-001.png)
+![](images/2023/anigo-ai-animation_img-001.png)
 
 ## Motion Matching
 
@@ -41,7 +41,7 @@ impl MotionSpace {
 
 The HNSW index gives approximate nearest neighbors in ~10μs per query — fast enough to run every frame. The weights are hand-tuned but we also trained a small regression model (100 params) that learns query-specific weights from user feedback. After 1000 user interactions, the weight model improved match quality by 15% over the hand-tuned baseline.
 
-![](2023/anigo-ai-animation_img-002.png)
+![](images/2023/anigo-ai-animation_img-002.png)
 
 ## Blending and Transitions
 
@@ -64,7 +64,7 @@ impl Animator {
             self.start_blend(&best_match, 0.15); // 150ms blend
         }
 
-![](2023/anigo-ai-animation_img-003.png)
+![](images/2023/anigo-ai-animation_img-003.png)
 
         if self.is_blending() {
             let t = self.blend_time / self.blend_duration;

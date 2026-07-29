@@ -172,3 +172,5 @@ const BLOG = {
   }
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>BLOG.init());else BLOG.init();
+// Expose for inline onclick handlers in post view
+window.BLOG = BLOG;

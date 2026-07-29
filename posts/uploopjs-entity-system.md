@@ -22,7 +22,7 @@ struct Velocity {
 }
 ```
 
-![](2023/uploopjs-entity-system_img-001.png)
+![](images/2023/uploopjs-entity-system_img-001.png)
 
 ```rust
 // GPU query — runs as compute shader
@@ -59,7 +59,7 @@ The dispatch size is derived from entity count. Each GPU thread processes one en
 
 Queries can span multiple languages:
 
-![](2023/uploopjs-entity-system_img-002.png)
+![](images/2023/uploopjs-entity-system_img-002.png)
 
 ```javascript
 // JavaScript — declarative query
@@ -90,7 +90,7 @@ Archetype: [Transform, Mesh, Material]
   Entity 4: { pos: (0,5,0), mesh: Sphere, mat: Blue }
 ```
 
-![](2023/uploopjs-entity-system_img-003.png)
+![](images/2023/uploopjs-entity-system_img-003.png)
 
 Components within an archetype are stored as columns in GPU storage buffers:
 
