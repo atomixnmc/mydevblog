@@ -4,6 +4,11 @@ import { resolve } from 'path';
 export default defineConfig({
   root: '.',
   base: './',
+  esbuild: {
+    jsx: 'preserve',
+    // Don't treat .js files as JSX
+    loader: 'js',
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
