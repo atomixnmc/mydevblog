@@ -47,7 +47,35 @@
     </div>
   </header>
 
-  <main class="blog-main">
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h2 class="hero-slogan">Live. Create. <span class="hero-accent">Play</span></h2>
+      <p class="hero-sub">Think Big &mdash; HyperGraph · AI · Games · Fractals</p>
+      <div class="hero-actions">
+        <sl-button variant="primary" size="medium" href="#posts" onclick="document.getElementById('blog-content').scrollIntoView({behavior:'smooth'});return false;">
+          <sl-icon name="journal-text" slot="prefix"></sl-icon> Read the Blog
+        </sl-button>
+        <sl-button variant="default" size="medium" href="https://github.com/atomixnmc" target="_blank">
+          <sl-icon name="github" slot="prefix"></sl-icon> GitHub
+        </sl-button>
+      </div>
+      <div class="hero-companies">
+        <span>Part of </span>
+        <a href="https://i2cw.com/" target="_blank" class="company-link">
+          <sl-icon name="box" style="vertical-align:-3px"></sl-icon> i2c
+        </a>
+        <span class="company-sep">&amp;</span>
+        <a href="https://www.sggame.us/" target="_blank" class="company-link">
+          <sl-icon name="controller" style="vertical-align:-3px"></sl-icon> SGGame
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="blog-main" id="posts">
     <aside class="blog-sidebar" id="sidebar">
       <sl-card class="profile-card">
         <div slot="header" class="profile-header">
@@ -59,7 +87,19 @@
         </div>
         <div class="profile-body">
           <p>Building <strong>HyperGraph</strong> ecosystems — graph-native runtimes, AI animation, and visual programming.</p>
-          <sl-button variant="default" size="small" href="https://github.com/atomixnmc" target="_blank">
+          <div class="company-badges">
+            <a href="https://i2cw.com/" target="_blank">
+              <sl-tag size="small" variant="primary">
+                <sl-icon name="box" slot="prefix"></sl-icon> i2c
+              </sl-tag>
+            </a>
+            <a href="https://www.sggame.us/" target="_blank">
+              <sl-tag size="small" variant="success">
+                <sl-icon name="controller" slot="prefix"></sl-icon> SGGame
+              </sl-tag>
+            </a>
+          </div>
+          <sl-button variant="default" size="small" href="https://github.com/atomixnmc" target="_blank" style="margin-top:4px">
             <sl-icon name="github" slot="prefix"></sl-icon> GitHub
           </sl-button>
           <sl-button variant="default" size="small" href="https://github.com/atomixnmc/mydevblog" target="_blank">
@@ -90,8 +130,14 @@
   </main>
 
   <footer class="blog-footer">
+    <div class="footer-companies">
+      <a href="https://i2cw.com/" target="_blank"><sl-icon name="box"></sl-icon> i2c — Information to Computation</a>
+      <span class="footer-sep">·</span>
+      <a href="https://www.sggame.us/" target="_blank"><sl-icon name="controller"></sl-icon> SGGame</a>
+      <span class="footer-sep">·</span>
+      <a href="https://github.com/atomixnmc" target="_blank"><sl-icon name="github"></sl-icon> atomixnmc</a>
+    </div>
     <p>Built with <sl-icon name="heart" style="color:var(--sl-color-pink-500);vertical-align:middle"></sl-icon> using <a href="https://shoelace.style/" target="_blank">Shoelace</a>, <a href="https://marked.js.org/" target="_blank">marked</a> &amp; <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-    <p class="footer-gh"><sl-icon name="github"></sl-icon> <a href="https://github.com/atomixnmc/mydevblog">atomixnmc/mydevblog</a></p>
   </footer>
 </body>
 </html>

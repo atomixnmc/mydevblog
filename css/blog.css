@@ -38,16 +38,117 @@ body {
 .tagline { margin: 0; font-size: .8rem; color: var(--sl-color-neutral-500); }
 .header-actions { display: flex; gap: .5rem; }
 
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--sl-color-neutral-800);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://i2cw.com/images/product-illustrations/tion-concept.jpeg') center / cover no-repeat;
+  filter: blur(20px) saturate(1.2);
+  transform: scale(1.1);
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(2,6,23,.75) 0%, rgba(2,6,23,.5) 50%, rgba(2,6,23,.85) 100%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  max-width: 700px;
+}
+.hero-slogan {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 800;
+  margin: 0 0 .25rem;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  color: var(--sl-color-neutral-100);
+  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+.hero-accent {
+  background: linear-gradient(135deg, var(--sl-color-primary-400), var(--sl-color-blue-400), var(--sl-color-pink-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--sl-color-neutral-400);
+  margin: .5rem 0 1.5rem;
+  letter-spacing: .05em;
+}
+.hero-actions {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.hero-companies {
+  font-size: .85rem;
+  color: var(--sl-color-neutral-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.company-link {
+  color: var(--sl-color-neutral-300);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .2rem .6rem;
+  border: 1px solid var(--sl-color-neutral-700);
+  border-radius: var(--sl-border-radius-pill);
+  transition: border-color .2s, background .2s;
+}
+.company-link:hover {
+  border-color: var(--sl-color-primary-600);
+  background: rgba(255,255,255,.05);
+  color: var(--sl-color-primary-400);
+}
+.company-sep {
+  color: var(--sl-color-neutral-600);
+}
+
 /* ===== Main layout ===== */
 .blog-main { display: flex; max-width: 1280px; margin: 1.5rem auto; padding: 0 1.5rem; gap: 1.5rem; flex: 1; width: 100%; box-sizing: border-box; }
 .blog-sidebar { width: var(--sidebar-width); flex-shrink: 0; display: flex; flex-direction: column; gap: 1rem; }
 .blog-content { flex: 1; min-width: 0; }
 
+/* ===== Company badges in sidebar ===== */
+.company-badges {
+  display: flex;
+  gap: .35rem;
+  flex-wrap: wrap;
+}
+.company-badges a { text-decoration: none; }
+.company-badges sl-tag::part(base) {
+  font-weight: 500;
+  font-size: .75rem;
+}
+.company-badges sl-tag sl-icon {
+  font-size: .7rem;
+}
+
 /* ===== Sidebar cards — explicit contrast ===== */
 .profile-card, .topics-card, .gh-card {
   --sl-card-border-color: var(--sl-color-neutral-700);
 }
-/* Override card text for readability in both themes */
 .profile-card::part(body),
 .topics-card::part(body),
 .gh-card::part(body),
@@ -117,9 +218,26 @@ body {
 .repo-item .ri-lang { font-size: .75rem; color: var(--sl-color-neutral-600); display: flex; align-items: center; gap: .25rem; }
 
 /* ===== Footer ===== */
-.blog-footer { text-align: center; padding: 2rem 1.5rem; border-top: 1px solid var(--sl-color-neutral-800); font-size: .8rem; color: var(--sl-color-neutral-500); }
-.blog-footer a { color: var(--sl-color-primary-400); }
-.footer-gh { margin-top: .25rem; }
+.blog-footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--sl-color-neutral-800);
+  font-size: .8rem;
+  color: var(--sl-color-neutral-500);
+}
+.blog-footer a { color: var(--sl-color-primary-400); text-decoration: none; }
+.blog-footer a:hover { text-decoration: underline; }
+.footer-companies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-bottom: .75rem;
+  font-size: .85rem;
+}
+.footer-companies sl-icon { vertical-align: -2px; }
+.footer-sep { color: var(--sl-color-neutral-600); }
 
 /* ===== Search ===== */
 #search-results { margin-top: 1rem; display: flex; flex-direction: column; gap: .5rem; }
@@ -151,4 +269,4 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--sl-color-neutral-600); }
 
 /* ===== Responsive ===== */
-@media (max-width: 860px) { .blog-sidebar { display: none; } .blog-main { padding: 0 1rem; } .post-view { padding: 1rem; } }
+@media (max-width: 860px) { .blog-sidebar { display: none; } .blog-main { padding: 0 1rem; } .post-view { padding: 1rem; } .hero { min-height: 300px; } .hero-slogan { font-size: clamp(1.8rem, 8vw, 2.8rem); } }
