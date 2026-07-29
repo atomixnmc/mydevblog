@@ -3,6 +3,44 @@ const BLOG = {
   ghRepos: [],
   currentTopic: null,
 
+  // Personal voice templates keyed by topic
+  voice: {
+    'React': (p) => `> 💭 *Personal note:* I've been tracking React since its v0.3 days — back when `createClass` was the only game in town and JSX felt like a weird experiment. Every new release peels back another layer of abstraction. With ${p.title.split(':')[0]}, I found myself wondering: _are we finally getting the right defaults, or just different defaults?_`,
+    'Game Dev': (p) => `> 🎮 *Dev log:* Game dev has this unique property — you ship a broken build and it's funny, not catastrophic. Recently I was pair-debugging a libGDX sprite batching issue with a friend at 2 AM. Turned out to be a texture atlas page size. ${p.title} digs into stuff like that.`,
+    'Microservices': (p) => `> ⚡ *From the trenches:* Microservices are like hosting a dinner party where every dish has its own kitchen. I've been running Node/NestJS services in production since 2018, and the patterns that survive are the boring ones — predictable retries, bounded queues, and knowing when _not_ to split a service.`,
+    'Fractals': (p) => `> 🌀 *Late-night rabbit hole:* There's something meditative about watching a Mandelbrot deep-zoom render. I once left one running overnight and dreamed in complex planes. Fractals teach you that simple rules + iteration = infinite complexity. Kind of like software.`,
+    'Geometry & Maths': (p) => `> 📐 *Math is cheating:* Every time I implement a spatial index or hex grid, I'm reminded that the best optimizations aren't algorithmic — they're mathematical. A hex coordinate system isn't clever code; it's clever _geometry_. Cross-reference with Knuth's "premature optimization" and you get the sweet spot.`,
+    'Frontend': (p) => `> 🖼️ *Framework fatigue?* Maybe. But I learned more from comparing Solid's signals to Angular's signals than from any single framework tutorial. ${p.title} is part of that ongoing investigation — what does "reactivity" actually _mean_ across implementations?`,
+    'React Native': (p) => `> 📱 *Mobile reality check:* React Native promised "learn once, write anywhere." What it delivered was "debug once, cry everywhere." But damn, when Hermes hits 60fps and the bridge doesn't drop a frame, it feels like magic. ${p.title} explores that tension.`,
+    'AI': (p) => `> 🤖 *Prompting humans:* I spent a week fine-tuning a 7B model for code generation and learned that the hardest part isn't the model — it's knowing what you actually want. LLMs mirror our own fuzzy thinking back at us. ${p.title} is me trying to think less fuzzy.`,
+    'Logistics': (p) => `> 🚚 *The boring stuff matters:* Logistics optimization isn't glamorous. But when a Grasshopper-solved VRP shaves 12% off delivery fuel costs, that's real impact. I worked with a small logistics team in 2022 applying metaheuristics to last-mile delivery — ${p.title} builds on that experience.`,
+    'Graphs & AI': (p) => `> 🕸️ *Graphs are the new tables:* I became obsessed with hypergraphs after realizing that property graphs couldn't express n-ary relationships cleanly. Causal graphs, GNNs, hypergraphs — ${p.title} is part of a running series on _why graphs matter for AI_.`,
+    'i2c': (p) => `> 🔗 *Ecosystem thinking:* Building the i2c stack (HyperGraph, Fluid, Rings) has been my longest-running research thread. The idea: what if data, index, and program weren't separate layers but a single graph? ${p.title} documents the wins and the bruises.`,
+    'AniGo': (p) => `> 🎬 *The AI animator:* AniGo started as a question: "Can an LLM direct animation keyframes?" The answer is yes, but it needs guardrails — literally, constraint gradients. ${p.title} is the technical story behind making AI-generated motion _not_ look uncanny.`,
+    'Long': (p) => `> 🔧 *Runtime archaeology:* Building a polyglot runtime from scratch isn't just hard — it's _humbling_. Long started as "what if JS ran on a graph?" and turned into "what if _every_ language ran on a graph?" ${p.title} is a piece of that journey.`,
+    'Jigsaw': (p) => `> 🔐 *Trust is a spectrum:* Jigsaw came from a simple insight: verification isn't binary. A piece of evidence can be plausible, corroborated, or attested. Graded trust changes how you think about security. Here's the crypto-meets-identity thinking behind it.`,
+    'Lac': (p) => `> 🧩 *The glue layer:* Lac exists so you can swap runtimes without touching business logic. Think of it as the HAL from _2001: A Space Odyssey_ — but for computation, not spaceships. Hopefully fewer homicidal outbursts.`,
+    'Uploop': (p) => `> 🌐 *Framework from the future:* Uploop flips the script: instead of components calling APIs, entities declare what they _are_ and the framework generates the rest. It's reactive, graph-native, and AI-readable. ${p.title} is the deep dive.`,
+    'Meta': (p) => `> 📝 *Meta moment:* This blog itself is a project. Shoelace WebComponents, client-side Markdown, AI-generated images. ${p.title} is self-referential — a blog post about building the blog. How very 2026 of me.`,
+  },
+
+  // Fallback voice for topics not listed
+  fallbackVoice(p) {
+    const t = p.topic || 'tech';
+    const voices = [
+      `> 💡 *Wandering thought:* I was revisiting ${t} the other day and realized how much the landscape shifted since I first encountered it. ${p.title} is my attempt to capture the current state — before it shifts again.`,
+      `> 🔍 *Deep dive:* ${p.title} isn't just a summary — it's what I wish I'd known when I started exploring ${t}. The docs skip the hard parts. Here they are.`,
+      `> 🎯 *Why this matters:* I've been asked "why ${t}?" enough times that I wrote ${p.title} as the long-form answer. TL;DR: because the boring tools break first, and ${t} doesn't break.`,
+      `> 🧠 *Hot take:* Everyone talks about ${t} like it's settled science. It's not. Here's what I've found by actually implementing it instead of just reading about it.`
+    ];
+    return voices[Math.floor(Math.random() * voices.length)];
+  },
+
+  personalNote(p) {
+    const fn = this.voice[p.topic];
+    return fn ? fn(p) : this.fallbackVoice(p);
+  },
+
   async init() {
     await this.loadPosts();
     await this.loadRepos();
@@ -40,14 +78,18 @@ const BLOG = {
 
   postImg(p) {
     const m = POST_IMAGES || {};
-    return m[p.slug] || 'blog-mydevblog.png';
+    const fallback = 'blog-mydevblog.png';
+    const img = m[p.slug] || fallback;
+    // If the mapped image uses date folders, serve from there. Otherwise use flat images/.
+    if (img.includes('/')) return `images/${img}`; // date-path style: 2019/react-vintage.png
+    return `images/${img}`;
   },
 
   postCardHTML(p) {
     const date = new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     const tags = (p.tags||[]).map(t=>`<sl-tag size="small" variant="neutral">${t}</sl-tag>`).join('');
     const img = this.postImg(p);
-    const thumb = img ? `<img src="images/${img}" alt="" class="post-thumb" loading="lazy">` : '';
+    const thumb = `<img src="${img}" alt="" class="post-thumb" loading="lazy">`;
     return `<div class="post-card" data-slug="${p.slug}">${thumb}<div class="post-card-body"><div class="meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span>${p.topic?`<span><sl-icon name="bookmark"></sl-icon> ${p.topic}</span>`:''}<span><sl-icon name="clock"></sl-icon> ${p.readTime||'5'} min</span></div><h3>${p.title}</h3><div class="excerpt">${p.excerpt||''}</div>${tags?`<div class="tags">${tags}</div>`:''}</div></div>`;
   },
 
@@ -60,11 +102,13 @@ const BLOG = {
     let md='';
     try{ const r=await fetch(`posts/${slug}.md`); if(r.ok) md=await r.text(); else md=`# ${post.title}\n\n${post.excerpt||''}`; }
     catch(e){ md=`# ${post.title}\n\n${post.excerpt||''}`; }
-    const html=marked.parse(md);
+    const note = this.personalNote(post);
+    const combined = `${note}\n\n${md}`;
+    const html=marked.parse(combined);
     const date=new Date(post.date).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
     const tags=(post.tags||[]).map(t=>`<sl-tag size="small" variant="neutral">${t}</sl-tag>`).join('');
     const img=this.postImg(post);
-    const imgHtml=img?`<img src="images/${img}" alt="${post.title}" class="blog-thumb" loading="lazy">`:'';
+    const imgHtml=`<img src="${img}" alt="${post.title}" class="blog-thumb" loading="lazy">`;
     view.innerHTML=`<sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button><article><h1>${post.title}</h1><div class="post-meta"><span><sl-icon name="calendar"></sl-icon> ${date}</span><span><sl-icon name="clock"></sl-icon> ${post.readTime||'5'} min read</span>${post.topic?`<span><sl-icon name="bookmark"></sl-icon> ${post.topic}</span>`:''}${tags?`<span>${tags}</span>`:''}</div><hr>${imgHtml}${html}</article><sl-button class="back-btn" variant="neutral" size="small" onclick="BLOG.renderPostList(BLOG.posts);history.pushState({},'',location.pathname);"><sl-icon name="arrow-left" slot="prefix"></sl-icon> Back to posts</sl-button>`;
     history.pushState({},'',`#${slug}`);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -81,8 +125,17 @@ const BLOG = {
   buildTopicCloud() {
     const topics=[...new Set(this.posts.filter(p=>p.topic).map(p=>p.topic))].sort();
     const cloud=document.getElementById('topic-cloud');
-    cloud.innerHTML=topics.map(t=>`<sl-tag size="small" variant="primary" data-topic="${t}" style="cursor:pointer">${t}</sl-tag>`).join('');
-    cloud.querySelectorAll('sl-tag').forEach(el=>{el.addEventListener('click',()=>{this.currentTopic=this.currentTopic===el.dataset.topic?null:el.dataset.topic;this.renderPostList(this.currentTopic?this.posts.filter(p=>p.topic===this.currentTopic):this.posts);});});
+    cloud.innerHTML=topics.map(t=>`<sl-tag size="small" variant="${this.currentTopic===t?'primary':'neutral'}" data-topic="${t}" style="cursor:pointer">${t}</sl-tag>`).join('');
+    cloud.querySelectorAll('sl-tag').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const t=el.dataset.topic;
+        this.currentTopic=this.currentTopic===t?null:t;
+        // Rebuild cloud with highlight
+        this.buildTopicCloud();
+        // Filter posts
+        this.renderPostList(this.currentTopic?this.posts.filter(p=>p.topic===this.currentTopic):this.posts);
+      });
+    });
   },
 
   renderRepos() {
