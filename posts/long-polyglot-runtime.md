@@ -17,6 +17,8 @@ Long is a polyglot runtime that runs JavaScript, Python, Rust, and WebAssembly i
 └──────────────────────────────┴──────┘
 ```
 
+![](2023/long-polyglot-runtime_img-001.png)
+
 All engines share a contiguous block of linear memory. Boa allocates JS objects here, CPython allocates PyObjects here, and Wasmtime maps WASM linear memory into the same region. Pointers across languages are actual memory addresses — no serialization, no marshaling.
 
 ## Cross-Language Calls
@@ -40,6 +42,8 @@ image = js.document.getElementById("canvas")
 pixels = rust.process_image(image.data)
 ```
 
+![](2023/long-polyglot-runtime_img-002.png)
+
 The call overhead is about 100ns between any two languages — cheaper than a WASM call boundary in most runtimes. This is because the memory is already shared; cross-language calls just validate the function pointer and jump.
 
 ## The Event Loop
@@ -56,6 +60,8 @@ spawn(async {
     js::call("render", processed).await;
 });
 ```
+
+![](2023/long-polyglot-runtime_img-003.png)
 
 A single `async fn` can span JavaScript, Python, and Rust — each `.await` crossing language boundaries transparently. The event loop schedules all async tasks from all languages on the same thread pool. I/O operations from any language go through tokio's reactor, so you get epoll/kqueue/IOCP regardless of the calling language.
 

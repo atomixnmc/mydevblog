@@ -17,6 +17,8 @@ Shoelace is framework-agnostic. It uses the Custom Elements v1 spec — every co
   <sl-tab slot="nav" panel="latest" active>Latest</sl-tab>
   <sl-tab slot="nav" panel="popular">Popular</sl-tab>
 
+![](2026/mydevblog-relaunch_img-001.png)
+
   <sl-tab-panel name="latest">
     <post-list category="latest" />
   </sl-tab-panel>
@@ -45,6 +47,8 @@ async function build() {
     const md = await readFile(`posts/${file}`, 'utf-8');
     const html = marked(md);
     const slug = file.replace('.md', '');
+
+![](2026/mydevblog-relaunch_img-002.png)
 
     // Extract title from first heading
     const title = md.match(/^# (.+)$/m)?.[1] ?? slug;
@@ -77,6 +81,8 @@ await build();
 ```
 
 The build process takes ~2 seconds for 180+ posts. Most of the time is parsing markdown — the template rendering is under 50ms.
+
+![](2026/mydevblog-relaunch_img-003.png)
 
 ## Shoelace Components Used
 
